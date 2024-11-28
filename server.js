@@ -3,7 +3,15 @@ const app = express()
 
 app.set('view engine', 'ejs')
 
+app.use(logger)
 app.get('/', (req, res) => {
+    console.log("Here")
+    res.render('index', {text: "World"})
+})
+
+// or
+
+app.get('/', logger, (req, res) => {
     console.log("Here")
     res.render('index', {text: "World"})
 })
@@ -11,5 +19,10 @@ app.get('/', (req, res) => {
 const userRouter = require("./routes/users")
 
 app.use('/users', userRouter)
+
+function logger(req, res, next) {
+    console.log(req.originalUrl);
+    next()
+}
 
 app.listen(3000)
