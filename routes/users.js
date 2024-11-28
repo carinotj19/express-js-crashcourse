@@ -5,8 +5,20 @@ router.get("/", (req, res) => {
     res.send("Users List");
 });
 
+router.get("/new", (req, res) => {
+    res.render("users/new", { firstName: "Test" });
+});
+
 router.post("/", (req, res) => {
-    res.send("Create User");
+    const isValid = false
+    if (isValid) {
+        users.push({ firstName: req.body.firstName })
+        res.redirect(`/users/${users.length - 1}`)
+    } else {
+        console.log("Error");
+        console.log(req.body.firstName);
+        res.render('users/new', { firstName: req.body.firstName })
+    }
 });
 
 router
